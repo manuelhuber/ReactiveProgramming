@@ -240,7 +240,7 @@ var filtered = values.filter(value => value % 2 === 0);
 ```
 ## 2. What is Reactive Programming
 
-Reactive Programming is a programming paradigm for asynchronous propagation of change. Many considere it event driven. Instead of "execute function B after function A" or "execute function A after 5 seconds" you declare "execute function A whenever event X happens". This is already common practice in almost every UI framework where you write event handler. You attach a function to a "button clicked" event for example.
+Reactive Programming is a programming paradigm for asynchronous propagation of change. Many considere it event driven. Instead of "execute function B after function A" or "execute function A after 5 seconds" you declare "execute function A whenever event X happens". This is already common practice in almost every UI framework where you write event handler. You attach a function to a "button clicked" event for example. But reactive programming takes it even further by making streams of not only events but any data. And with a much more advanced API to manipulate and combine these streams.
 
 A great embodiment of reactive programming is ReactiveX - a language agnostic specification for reactive programming libraries. We will focus mainly on ReactiveX and RxJS (the JavaScript implementation of ReactiveX) but will also show you a bit of Socket.io.
 
@@ -248,7 +248,7 @@ A great embodiment of reactive programming is ReactiveX - a language agnostic sp
 
 What does that mean? Instead of working directly with your data T you access them with a Observable<T> wrapper. You can subscribe to the Observable, and react every time the Observable publishes a new value. This is a shift away from actively pulling new data - the observable will notify us automatically.
 
-The key elements of reactive programming are:
+The key elements of ReactiveX are:
 
 - streams
 - observables
@@ -301,4 +301,4 @@ So what does reactive Programming look like in JavaScript? Let's start with some
 
  Every browser offers event handlers for button clicks. With 1 line of code RxJS creates a stream of click events from that button. At first we would group clicks by proximity in time. We want to group all clicks that are withing 250ms of each other to a list of clicks. Then map this list to the number of clicks in the list. So a single click within our specified 250ms will becomes a 1, double clicks a 2, tripple click a 3 and so on. Then simply filter the stream to only return values equal to or greater than 2 and you have a stream that only contains events where the user clicks more than once in quick succession. This is what the streams for our double click detection would look like:
 ![DoubleClickStream](/double_click_stream.png)
-[Source](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+[Image Source](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
