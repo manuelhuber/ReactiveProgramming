@@ -1,0 +1,41 @@
+Chat server receives events:
+
+name: 'chat message'
+description: Send a message to the chat. Everybody will receive it
+value: string
+
+name: 'start typing'
+description: Send this to the server when you start typing
+
+name: 'stop typing'
+description: Send this to the server when you stop typing
+
+name: 'pm'
+description: Send this to the server to send a message to only one person
+value: Object 
+  properties: "to", "message"
+  example: {to: "Peter", message: "Hi!"}
+
+
+
+Chat server emits events:
+
+name: 'chat message'
+description: The server send a message to everybody connected. The string will be prefixed with the name of the sender
+value: string
+
+name: 'pm'
+description: This event is sent to the sender and receiver of a PM
+value: Object
+  properties: "from", "to", "message"
+  example: {from: "Markus", to: "Peter", message: "Hey, what's up dude?"}
+
+name: 'typing'
+description: Emits an array of all users that are currently typing
+value: Array
+  example: ['Manuel', 'Sonja']
+
+name: 'all users'
+description: Emits an array of all users that are currently online
+value: Array
+  example: ['Manuel', 'Sonja']
