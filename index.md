@@ -302,3 +302,23 @@ So what does reactive Programming look like in JavaScript? Let's start with some
  Every browser offers event handlers for button clicks. With 1 line of code RxJS creates a stream of click events from that button. At first we would group clicks by proximity in time. We want to group all clicks that are withing 250ms of each other to a list of clicks. Then map this list to the number of clicks in the list. So a single click within our specified 250ms will becomes a 1, double clicks a 2, tripple click a 3 and so on. Then simply filter the stream to only return values equal to or greater than 2 and you have a stream that only contains events where the user clicks more than once in quick succession. This is what the streams for our double click detection would look like:
 ![DoubleClickStream](/double_click_stream.png)
 [Image Source](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+
+And this is how the code looks
+````javascript 1.8
+const button = document.getElementById('multiclickButton');
+
+const clickStream = Rx.Observable.fromEvent(button, 'click');
+
+const multiClicks = clickStream
+  .buffer(clickStream.debounce(250))
+  .map(x => x.length)
+  .filter(x => x>=2);
+
+multiClicks.subscribe(clicks => console.log('You made ${clicks} clicks!'))
+````
+
+Pretty neat, right?   
+First we get a reference to the button and then use RxJS to create a Observable for the click events.   
+Then the magic happens in just 3 lines. Buffer, map and filter.  
+For different buffer strategies check out [the official documentation](http://reactivex.io/documentation/operators/buffer.html)
+
