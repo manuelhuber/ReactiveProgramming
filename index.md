@@ -137,7 +137,7 @@ function processData(that) {
 ```
 Once the button is clicked, a request is send to the URL in order to get data. By the time the [request](https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp) is finished and the response is ready (state = 4) as well as the status is ok (200), the data will be processed. In this example the response text will be parsed into a [JSON object](https://www.w3schools.com/js/js_json_parse.asp) and the items will be display as a list.
 
-Callbacks are quite handy but can be confusing when the application has a lot of requests and they are nested. For example you load a list of books and each book has a picture and comments, from people who read it already, which you want to display as well. So within the callback of the list you need to create a request the comments.
+Callbacks are quite handy but can be confusing when the application has a lot of requests and they are nested. For example you load a list of books and each book has a picture and comments, from people who read it already, which you want to display as well. So within the callback of the list you need to create a request go get the comments.
 
 **Promises**
 
