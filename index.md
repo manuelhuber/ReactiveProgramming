@@ -313,6 +313,7 @@ Reactive is not just a programming paradigm but also an approach to describe mod
 Nowadays systems must be robust and flexible to fulfil the modern requirements. In times when applications are deployed on various platforms and devices such as mobile devices or even cloud-based clusters with thousands of multi-core processors and where users don’t tolerate downtime or response time above milliseconds - the requirements for software architectures are changing. 
 Jonas Bonér, Dave Farley, Roland Kuhn, and Martin Thompson describe a system architecture which meet those requirements in their so called Reactive Manifesto. They, as well as over 20.000 supporter, say that systems which are Responsive, Resilient, Elastic and Message Driven supplies the necessary characteristics. These Systems are called Reactive Systems. 
 When building a reactive system one gets a system which is more flexible, loosely-coupled and scalable. Therefore it is easier to develop them and they are more amenable to changes. These systems are a lot more tolerant of failure. Due to their responsiveness, they provide effective interactive feedback for users. 
+The following graphic shows the 4 key
 
 ![Overview](https://www.reactivemanifesto.org/images/reactive-traits.svg)
 
