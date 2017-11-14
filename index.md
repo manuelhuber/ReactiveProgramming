@@ -63,7 +63,7 @@ function myObjectFunction (firstname, surname){
 }
 var mySecondObjectFunction = function (firstname, surname){
         return { Firstname :  firstname,    Surname : surname};
-}
+};
 
 function myFunction (firstname, surname){
         var name = myObjectFunction(firstname, surname);
