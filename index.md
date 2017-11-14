@@ -20,8 +20,9 @@ First of all, let’s do a short recap on javascript. Programming for the Web ja
 First steps: Variables and Contants
 - Variables
 ```javascript 
-    var newString = "String";             let newString = "String";
-    let a, b = 10;                        let c = 10, d = "String";
+    var newString = "String";             
+    let a, b = 10;                 
+    let c = 10, d = "String";
 ```     
 - Constants
 ```javascript
@@ -42,7 +43,7 @@ Moving on to: Arrays and Objects
 ```
 - Arrays
 ```javascript
-    var myElements = [ 2 , 3, 4, 5 ]; ||
+    var myElements = [ 2 , 3, 4, 5 ]; 
     var myElements = new Array(2 , 3, 4, 5);
     var alsoMyElements = [ 2, "Hello", new Date(), 5 ];
 ```
