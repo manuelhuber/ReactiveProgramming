@@ -254,9 +254,10 @@ What does that mean? Instead of working directly with your data T you access the
 | type of execution   |  single items | mulitple items
 |------ |  --------  |  ----------
 | synchronous | T getData() | Iterable<T> getData()
-| asynchronous | Future <T> getData() | Observable <T> getData()
+| asynchronous | Future<T> getData() | Observable<T> getData()
 	
-	
+This table provides an overview of the different ways to get data. We already talked about T getData() e.g. an Object, Iterable<T> getData() e.g. an Array, Future<T> getData() e.g. Promise and now Observable<T>.
+
 The key elements of ReactiveX are:
 
 - streams
