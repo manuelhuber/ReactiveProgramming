@@ -69,7 +69,7 @@ function myFunction (firstname, surname){
 }
 
 ```
-The first function is gets two parameters and returns them as object. As soon as the surronding function or script is executed - the first function can be executed. The second function on the other hand is a functional expression and is ready to be executed as soon as the line, in which it is defined, is reached in the executed script.
+The first function gets two parameters and returns them as object. As soon as the surronding function or script is executed - the first function can be executed. The second function on the other hand is a functional expression and is ready to be executed as soon as the line, in which it is defined, is reached in the executed script.
 
 There are some **global functions** you can use.
 
@@ -82,7 +82,7 @@ String(Object) | ``` String(354646.55) // "354646.55" ```
 parseFloat(String) | ``` parseFloat("33.33333333") // 33.33333333 ```
 parseInt(String) | ``` parseInt(“456.235665”) // 456 ```
 
-You can use those functions with all JavaScript objekts. [Here](https://www.w3schools.com/jsref/jsref_obj_global.asp) is a list of all global functions.
+You can use those functions with all JavaScript objects. [Here](https://www.w3schools.com/jsref/jsref_obj_global.asp) is a list of all global functions.
 
 
 **event handling**
@@ -126,6 +126,7 @@ function processData(that) {
 		for (i in response.ProductCollection) {
 			txt += "<li>" + response.ProductCollection[i].ProductId + " - "
 					+ response.ProductCollection[i].Category + "</li>";
+			//Create corresponding request here
 		}
 		txt += "</ul>"
 		document.getElementById("demo").innerHTML = txt;
@@ -134,7 +135,7 @@ function processData(that) {
 ```
 Once the button is clicked, a request is send to the URL in order to get data. By the time the [request](https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp) is finished and the response is ready (state = 4) as well as the status is ok (200), the data will be processed. In this example the response text will be parsed into a [JSON object](https://www.w3schools.com/js/js_json_parse.asp) and the items will be display as a list.
 
-Callbacks are quite handy but can be confusing when the application has a lot of requests and they are nested. For example you load a list of books and each book has a picture and comments, from people who read it already, which you want to display as well.
+Callbacks are quite handy but can be confusing when the application has a lot of requests and they are nested. For example you load a list of books and each book has a picture and comments, from people who read it already, which you want to display as well. So within the callback of the list you need to create a request the comments.
 
 **Promises**
 
@@ -158,8 +159,9 @@ The next example shows a simple implementation of a promise:
 ```javascript
 function loadData(){
 	var myPromise = createPromise();
-        myPromise.then((that) => {var response = JSON.parse(that.responseText);//render content})
-              .catch((err) => console.log("rejected:", err));
+        myPromise.then((that) => {var response = JSON.parse(that.responseText);
+			//render content and create corresponding request here})
+              	 .catch((err) => console.log("rejected:", err));
 }
 function createPromise(){
         return new Promise((resolve, reject) => {
@@ -180,6 +182,10 @@ function createPromise(){
 By the time the request is finsihed and valid, then the response will be rendered. The methods *then* and *catch* return a promise thereselfs, so they can be chained:
 
 ![promises](https://cdn.rawgit.com/Vectaio/a76330b025baf9bcdf07cb46e5a9ef9e/raw/26c4213a93dee1c39611dcd0ec12625811b20a26/js-promise.svg) Graphic [from](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+But why use promises instead of callbacks?
+This is example is really simple, but still a promise is much easier to read due to the syntactic sugar *then* and *catch*. 
+
 
 Let's leave the world of web programming and look into another topic:
 
