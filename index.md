@@ -250,7 +250,7 @@ What does that mean? Instead of working directly with your data T you access the
 	
 **Observables fill the gap by being the ideal way to access asynchronous sequences of multiple items** [ReactiveX](http://reactivex.io/intro.html)
 | single items| mulitple items
-------------------------------------
+------|--------|----------------------
 synchronous|T getData()| Iterable<T> getData()
 	asynchronous|Future <T> getData()| Observable <T> getData()
 	
