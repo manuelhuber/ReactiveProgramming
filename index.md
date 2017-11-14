@@ -319,11 +319,12 @@ The following graphic shows the 4 key
 
  
 Now let's take a closer look into those characteristics.
-Responsive - if a response is possible it will be within a timely manner. The focus is to provide fast and consistent response time and to build reliable upper bounds for a consistent quality of service. 
-Resilient - if a failure occurs, the system remains responsive. Due to delegation, isolation, replication and containment a system can achieve resilience. In case of failure only the component in which it occurred is affected. The rest of the system stays intact. 
-Elastic - the workload may vary, still the system is responsive. The system increase or decreases the resources assigned to handle the streams as reaction to changes.
-Message Driven - asynchronous messages are passed through the system. This forms boundaries between components, that provides isolation, loose coupling and location transparency.      
+- Responsive - if a response is possible it will be within a timely manner. The focus is to provide fast and consistent response time and to build reliable upper bounds for a consistent quality of service. 
+- Resilient - if a failure occurs, the system remains responsive. Due to delegation, isolation, replication and containment a system can achieve resilience. In case of failure only the component in which it occurred is affected. The rest of the system stays intact. 
+- Elastic - the workload may vary, still the system is responsive. The system increase or decreases the resources assigned to handle the streams as reaction to changes.
+- Message Driven - asynchronous messages are passed through the system. This forms boundaries between components, that provides isolation, loose coupling and location transparency.      
 
+This architecure is already very common in large system. Being aware of these principles you can apply them when designing new systems, right from the start, rather then to rediscover them during implementation.  
 
 ## Reactive Programming in JavaScript
 
