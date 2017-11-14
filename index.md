@@ -249,8 +249,8 @@ A great embodiment of reactive programming is ReactiveX - a language agnostic sp
 What does that mean? Instead of working directly with your data T you access them with a Observable<T> wrapper. You can subscribe to the Observable, and react every time the Observable publishes a new value. This is a shift away from actively pulling new data - the observable will notify us automatically.
 	
 **Observables fill the gap by being the ideal way to access asynchronous sequences of multiple items** [ReactiveX](http://reactivex.io/intro.html)
-       | single items | mulitple items
------- |--------|-------------
+|       | single items | mulitple items
+------ |  --------  |  ----------
 synchronous| T getData() | Iterable<T> getData()
 asynchronous | Future <T> getData() | Observable <T> getData()
 	
