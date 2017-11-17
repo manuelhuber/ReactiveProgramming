@@ -348,7 +348,7 @@ So what does reactive Programming look like in JavaScript? Let's start with some
 
 And this is how the code looks
 
-```javascript 1.8
+```javascript
 const button = document.getElementById('multiclickButton');
 
 const clickStream = Rx.Observable.fromEvent(button, 'click');
