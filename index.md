@@ -347,6 +347,7 @@ So what does reactive Programming look like in JavaScript? Let's start with some
 [Image Source](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
 
 And this is how the code looks
+
 ````javascript 1.8
 const button = document.getElementById('multiclickButton');
 
