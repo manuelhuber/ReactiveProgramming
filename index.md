@@ -348,7 +348,7 @@ So what does reactive Programming look like in JavaScript? Let's start with some
 
 And this is how the code looks
 
-````javascript 1.8
+```javascript 1.8
 const button = document.getElementById('multiclickButton');
 
 const clickStream = Rx.Observable.fromEvent(button, 'click');
@@ -359,7 +359,7 @@ const multiClicks = clickStream
   .filter(x => x>=2);
 
 multiClicks.subscribe(clicks => console.log('You made ${clicks} clicks!'))
-````
+```
 
 Pretty neat, right?   
 First we get a reference to the button and then use RxJS to create a Observable for the click events.   
