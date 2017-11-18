@@ -265,7 +265,7 @@ What does that mean? Instead of working directly with your data T you access the
 | synchronous | T getData() | Iterable<T> getData()
 | asynchronous | Future<T> getData() | Observable<T> getData()
 	
-This table provides an overview of the different ways to get data. We already talked about T getData() e.g. an Object, Iterable<T> getData() e.g. an Array, Future<T> getData() e.g. Promise and now Observable<T>.
+This table provides an overview of the different ways to get data. We already talked about T getData() e.g. an Object, Iterable<T> getData() e.g. an Array, Future<T> getData() e.g. Promise and now Observable<T>. Like arrays they contain multiple items and like Futures we don't know when these items will be available.
 
 The key elements of ReactiveX are:
 
@@ -340,9 +340,11 @@ This architecture is already very common in large system. Being aware of these p
 
 ## Reactive Programming in JavaScript
 
+### Double Clicks
+
 So what does reactive Programming look like in JavaScript? Let's start with something common: double clicks. Lot's of applications use them. How would you do it with traditional programming? Saving the time of every click and when another click occurs compare the current time to the previous time? But what if you want to react to single clicks and double clicks. After every single click you would need to wait a few milliseconds to see if another click has occurred. It's obviously possible but it's going to be some ugly code. With streams this can be done with a few simple and easy to read operations.
 
- Every browser offers event handlers for button clicks. With 1 line of code RxJS creates a stream of click events from that button. At first we would group clicks by proximity in time. We want to group all clicks that are withing 250ms of each other to a list of clicks. Then map this list to the number of clicks in the list. So a single click within our specified 250ms will becomes a 1, double clicks a 2, triple click a 3 and so on. Then simply filter the stream to only return values equal to or greater than 2 and you have a stream that only contains events where the user clicks more than once in quick succession. This is what the streams for our double click detection would look like:
+ Every browser offers event handlers for button clicks. We can create a stream of click events from that button with only 1 line (and the RxJS library). At first we would want to group clicks by proximity in time. We want to group all clicks that are within 250ms of each other. Then map this list to the number of clicks in the list. So a single click within our specified 250ms will becomes a 1, double clicks a 2, triple click a 3 and so on. Then simply filter the stream to only return values equal to or greater than 2 and you have a stream that only contains events where the user clicks more than once in quick succession. This is what the streams for our double click detection would look like:
 ![DoubleClickStream](/double_click_stream.png)
 [Image Source](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
 
@@ -366,3 +368,87 @@ First we get a reference to the button and then use RxJS to create a Observable 
 Then the magic happens in just 3 lines. Buffer, map and filter.  
 For different buffer strategies check out [the official documentation](http://reactivex.io/documentation/operators/buffer.html)
 
+### Autocomplete
+
+Let's look at another example that is perfect for reactive programming: Autocomplete functionality. You type and you get suggestions in real time about what you might be typing. Let's start of naively and work out the errors until we arrive at a working solution. We want to do something like this:
+
+````javascript
+Rx.Observable.fromEvent(myInputField, 'input')
+             .map(searchWikipedia)
+             .subscribe(renderData, renderError);
+  
+function searchWikipedia(searchTerm) { /* ... */} // returns a promise
+function renderData(data) { /* ... */}
+function renderError(error) { /* ... */}
+````
+
+We get a stream from the users input in our ``myInputField``, make a call to the wikipedia server and then render the results beneath the input field.
+
+Why won't this work? Well first of all the "fromEvent" functions creates a stream of ``events``. We need the input as a string, so we add a 
+
+````javascript
+.map(event => event.target.value)
+````
+
+Now the ``searchWikipedia`` function receives proper string input. But there will probably be an error in our ``renderData`` function now. We would expect a list of suggestions or something similar, but what we end up with is a ``Promise``! Why is that? ``searchWikipedia`` makes an HTTP call and returns a promise synchronously. So our ``.map(searchWikipedia)`` function will create a new stream filled with promises. That's not what we want! We want a stream that emits the results of the HTTP call. That's what the ``flatMapLatest`` is for. This will "unpack" our promises and create a stream that only emits the values once the promises have been fullfilled.
+
+````javascript
+Rx.Observable.fromEvent(myInputField, 'input')
+             .map(event => event.target.value)
+             .flatMapLatest(searchWikipedia)
+             .subscribe(renderData, renderError);
+  
+function searchWikipedia(searchTerm) { /* ... */} // returns a promise
+function renderData(data) { /* ... */}
+function renderError(error) { /* ... */}
+````
+
+But we're not done yet. We should only suggest something to the user if there is at least some input. A search of 1 or 2 characters is pretty pointless since the user could be writing anything when all we have is the input "A". So let's ``filter`` out these kinds of things.  
+And if a user types really really fast we will send A LOT of requests. Basically every keystroke creates a new requests. It's probably enough to only check ever half second or so. This way our system is still suggesting ing "real time" without going overboard on HTTP requests. This can easily accomplished by throttling the stream.
+
+```javascript
+.filter(input => input.length > 2)
+.throttle(500)
+````
+
+This will leave us with this:
+
+````javascript
+Rx.Observable.fromEvent(myInputField, 'input')
+             .map(event => event.target.value)
+             .filter(input => input.length > 2)
+             .throttle(500)
+             .flatMapLatest(searchWikipedia)
+             .subscribe(renderData, renderError);
+  
+function searchWikipedia(searchTerm) { /* ... */} // returns a promise
+function renderData(data) { /* ... */}
+function renderError(error) { /* ... */}
+````
+
+This code will query the wikipedia server every time the user enters something with 3 or more characters (but not send more than 1 requests per .5 seconds) and show the suggestions to the user. All that's left to do is clean up. Instead of having one long chain of inputs we break it apart to make it more readable. 
+
+````javascript
+const rawInput = Rx.Observable.fromEvent(myInputField, 'input')
+                            .map(e => e.target.value);
+  
+const newSearchTerm = rawInput.filter(text => text.length > 2)
+                              .throttle(500);
+  
+newSearchTerm.flatMapLatest(searchWikipedia)
+             .subscribe(renderData, renderError);
+  
+function searchWikipedia(searchTerm) { /* ... */} // returns a promise
+function renderData(data) { /* ... */}
+function renderError(error) { /* ... */}
+````
+
+### Observable as core data structure
+
+In case you're not familiar with UI development, let me tell you something: Keeping everybody up to date is a huge problem. Or rather: was a huge problem. What's the issue? Your application has a proper dependency structure and good data flow. The services on top get data from servers. The UI components down below get services injected and get all of their data from them. The services don't know the UI components and the UI components don't know each other.   
+Let's say you have a ``TweetDisplayer`` component. It gets a reference to the ``TweetService`` via your dependency injection and then calls the ``getNewTweets`` function of the service to fetch the newest tweets. If you press the "update" button in the ``TweetDisplayer`` it will call ``getNewTweets`` again and receive a promise. When the promise is fulfilled it will display the new tweets.  
+What if there is another component now: The ``CategoryPicker``. A UI component that let's you decided you only want to see tweets about "JavaScript", "Cats" or some other topic. The ``TweetDisplayer`` and the ``CategoryPicker`` don't know each other - and they shouldn't. One should work without the other. So what happens when the ``CategoryPicker`` tells the ``TweetService`` to ``getNewTweets``? It will receive a promise and once that promise is fulfilled the tweets are here. Here in the ``CategoryPicker``. The ``TweetDisplayer`` was never involved and has no idea that th ``CategoryPicker`` chose a category or that the ``TweetService`` fetched new tweets! So what do you do?  
+ **Use observables!**  
+ Instead of returning one promise to the one component that called for a tweet update your ``TweetService`` will now offer a ``getTweetObservable`` function. This will return the observable that will deliver our tweets to the UI components. And unlike previously every UI component will receive the same observable! What happens when you want the service to get new tweets? First of all, the ``getNewTweets`` function will no longer return a promise. In fact it doesn't need to do anything! Why? Because everybody that want's the newest tweets is already subscribed to the tweet observable. When the service receives fetches new tweets it will simply push them in the observable and everybody who subscribed will be updated. It doesn't matter who, when or why called for new tweets, the observable delivers the newest, freshest and hottest tweets to every componen in your application!
+ 
+ This is especially useful if you need to display the same data in multiple locations. As long as every component is subscribed to the same observable they will always have the same data!
