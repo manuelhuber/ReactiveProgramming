@@ -14,7 +14,6 @@
     /**************************************FIRST TASK*****************************************************/
 
     const myMixedArray = new Array("&", 1, 2, "n", 3, 4, 5, 12, 'u', 10, "r", 11, 6, 7, "Z", 8, "e", 9, "i", "c", "h", "e", "n");
-    const myObservable = Rx.Observable.from(myMixedArray);
     //TODO create Observable with source myMixedArray
 
     //TODO sort all characters of myMixedArray

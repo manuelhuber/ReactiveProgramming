@@ -2,18 +2,20 @@ Chat server receives events:
 
 name: 'chat message'
 description: Send a message to the chat. Everybody will receive it
-value: string
+data: string
 
 name: 'start typing'
 description: Send this to the server when you start typing
+data: no data needs to be sent
 
 name: 'stop typing'
 description: Send this to the server when you stop typing
+data: no data needs to be sent
 
 name: 'pm'
 description: Send this to the server to send a message to only one person
-value: Object 
-  properties: "to", "message"
+data: Object 
+  properties: "to" string, "message" string
   example: {to: "Peter", message: "Hi!"}
 
 
@@ -22,20 +24,20 @@ Chat server emits events:
 
 name: 'chat message'
 description: The server send a message to everybody connected. The string will be prefixed with the name of the sender
-value: string
+data: string
 
 name: 'pm'
 description: This event is sent to the sender and receiver of a PM
-value: Object
-  properties: "from", "to", "message"
+data: Object
+  properties: "from" string, "to" string, "message" string
   example: {from: "Markus", to: "Peter", message: "Hey, what's up dude?"}
 
 name: 'typing'
 description: Emits an array of all users that are currently typing
-value: Array
+data: Array of strings
   example: ['Manuel', 'Sonja']
 
 name: 'all users'
 description: Emits an array of all users that are currently online
-value: Array
+data: Array of strings
   example: ['Manuel', 'Sonja']

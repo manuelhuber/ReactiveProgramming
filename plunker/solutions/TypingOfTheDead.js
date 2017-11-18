@@ -4,26 +4,27 @@
   const wordField = $('#TotDWord');
   const inputField = $('#TotDInput');
   const scoreField = $('#TotDScore');
+  const highscoreField = $('#TotDHighscore');
   // ----------------------------------------- //
 
+  let score = 0;
+  let highscore = -1;
+
   // A stream of the users string inputs
-  const inputFieldStream = Rx.Observable.fromEvent(inputField, 'keyup')
-    .map(x => x.target.value).distinctUntilChanged();
-
-  // This stream is used to reset the input stream
-  const manualInputStream = new Rx.Subject();
-
-  // Merge the input field stream and our manual stream
-  const inputStream = inputFieldStream.merge(manualInputStream);
+  const inputStream = Rx.Observable.fromEvent(inputField, 'input')
+    .map(x => x.target.value);
 
   // A stream that allows us to manually trigger that we need a new word
   const nextStream = new Rx.Subject();
 
+  // When we want the next word we need to reset the users input
+  nextStream.subscribe(() => inputField.val('').trigger('input'));
+
   // This stream calls a server for a new random word every time the nextStream emits an event. We startWith a value to trigger the first word
   const wordStream = nextStream.startWith('')
-  .flatMapLatest(getRandomWord)
-    // publish & refCount cache the result - otherwise every .map on wordStream would cause a new HTTP request
-    .publish().refCount();
+    .flatMapLatest(getRandomWord)
+    // share() to cache the result - otherwise every .map on wordStream would cause a new HTTP request (and therefore another random word)
+    .share();
 
   // When there is a new word, we display it
   wordStream.subscribe(word => {
@@ -32,21 +33,21 @@
   });
 
   // Checkstream combines the latest word with the latest userinput. It emits an array, like this ['the word', 'the user input'];
-  const checkStream = wordStream.combineLatest(inputStream);
+  // The share() is to make sure everybody receives the same data tuple (like the wordStream caching)
+  const checkStream = wordStream.combineLatest(inputStream).share();
 
-  // Emits false if the user input is not correct
-  const isCorrectStream = checkStream.map(tuple => {
-    const word = tuple[0];
-    const input = tuple[1];
-    return word.startsWith(input);
-  });
+  // Emits an event if the user input is not correct
+  const typoStream = checkStream.map(tuple => {
+      const word = tuple[0];
+      const input = tuple[1];
+      return word.startsWith(input);
+    })
+    .filter(x => !x);
 
-  isCorrectStream.subscribe(isCorrect => {
-    if (!isCorrect) {
-      reset();
-      scoreField.empty();
-    }
-  });
+  // When there is a typo we need a new word
+  typoStream.subscribe(nextStream);
+  // This is a short version for
+  // typoStream.subscribe(x => nextStream.onNext(x));
 
   // Emits an event when the user has entered the entire word correctly
   const wordCompletedStream = checkStream.filter(tuple => {
@@ -55,18 +56,36 @@
     return word == input;
   });
 
-  // Add a score and reset, when the wordCompletedStream fires
-  wordCompletedStream.subscribe(() => {
-    scoreField.append('I')
-    reset();
-  })
+  typoStream.subscribe(x => console.log('wont get executed'));
+  // Whenever the word is completed, request a new word
+  wordCompletedStream.subscribe(nextStream);
+  typoStream.subscribe(x => console.log('will get executed'));
 
-  // Resets the user input and requests a new word
-  function reset() {
-    inputField.value = '';
-    manualInputStream.onNext('');
-    nextStream.onNext();
-  }
+  // When this stream emits "true" increase the score, when it emits "false" reset to zero
+  const scoreUpdateStream = new Rx.Subject();
+
+  scoreUpdateStream.subscribe(increase => {
+    const newScore = increase ? ++score : 0;
+    score = newScore;
+  });
+
+  const scoreStream = scoreUpdateStream.map(increase => score).startWith(0);
+
+  scoreStream.subscribe(num => {
+    scoreField.empty();
+    scoreField.append(num);
+  });
+
+  typoStream.subscribe(() => scoreUpdateStream.onNext(false));
+  wordCompletedStream.subscribe(() => scoreUpdateStream.onNext(true))
+
+  const highscoreStream = scoreStream.filter(x => x > highscore);
+
+  highscoreStream.subscribe(num => {
+    highscore = num;
+    highscoreField.empty()
+    highscoreField.append(num);
+  });
 
   // Calls a server for a random word
   // returns a promise

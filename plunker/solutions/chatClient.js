@@ -10,12 +10,10 @@
   const currentlyTyping = $('#chatCurrentlyTyping');
   // Box to display all current users
   const allUsers = $('#chatAllUsers');
-  
-  var username;
 
   // ----- Login ---------------------------------------------------------------
   loginButton.click(() => {
-    username = usernameInput.val();
+    const username = usernameInput.val();
     if (!username) {
       alert('Please enter a username');
       return;
@@ -34,13 +32,13 @@
   function connect(username) {
 
     // ----- Connect to the server ----- 
-    var socket = io.connect('http://localhost:3000', {
+    var socket = io.connect('http://141.60.170.61:3000', {
       transports: ['websocket'],
       query: 'name=' + username
     });
 
     // ----- Send message ----- 
-    form.submit(() => {
+    form.submit((e) => {
       const message = input.val();
       if (!message) return false;
       if (isPM(message)) {
@@ -49,6 +47,8 @@
         socket.emit('chat message', message);
       }
       input.val('');
+      e.preventDefault();
+      e.stopPropagation();
       return false;
     });
 

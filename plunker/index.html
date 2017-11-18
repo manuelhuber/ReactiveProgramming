@@ -1,104 +1,100 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
   <title>Reactive Programming</title>
-
 </head>
 
 <body>
-
-  <div id="content">
-
+  
+  <div>
+    <h1>Links</h1>
     <div>
-      <h1>First Steps</h1>
-      <div>
-        Check the input field
-      </div>
-      <div id="helloWorld">
-        <input type="text" id="input1">
-        <button id="stopLogging">Stop logging</button>
-        <br>
-        <input type="text" id="input2" disabled="true"> Reacts to input with more than 2 characters
-        <br>
-        <input type="text" id="input3" disabled="true"> Reacts to input after a short delay
-        <br>
-        <input type="text" id="input4" disabled="true"> Reacts to the first 3 events. Then stops
-      </div>
+      <a href="http://reactivex.io/documentation/operators.html" target="_blank">Operator Decision Tree (scroll down)</a>
     </div>
-
     <div>
-      <h1>Arrays and Objects</h1>
-      <div>
-        Try sort, map, group by and filtering
-      </div>
-      <div id="arraysObjects">
-        <!-- The content for this will be generated dynamicaly -->
-      </div>
+      <a href="https://github.com/Reactive-Extensions/RxJS/tree/master/doc">RxJS 4</a>
     </div>
-
-    <div>
-      <h1>Tweet Service</h1>
-      <div>
-        Get the newest infos straight from twitter!
-      </div>
-      <div id="tweetService">
-        <!-- The content for this will be generated dynamicaly -->
-      </div>
-    </div>
-
-    <div>
-      <h1>Wikipedia Suggestions</h1>
-      <div id="wikipedia">
-        <input type="text" name="" id="wikipediaInput" value="" />
-        <div id="wikipediaOutput"></div>
-      </div>
-    </div>
-
-    <div>
-      <h1>Multiclick</h1>
-      <div id="multiclick">
-        <button id="multiclickButton">Click me fast!</button>
-      </div>
-    </div>
-    
-    <div>
-      <h1>Homemade</h1>
-      <div>
-        <input type="text" name="" id="homemadeInput" value="" />
-      </div>
-    </div>
-
-    <div>
-      <h1>Exercise: Chat</h1>
-      <form action="" method="get" accept-charset="utf-8">
-        your name :
-        <input type="text" name="" id="chatUsername" value="" />
-        <button id="chatLoginButton">Login</button>
-      </form>
-      <div id="chatMessages" style="height:200px; overflow:auto; border: 1px solid black;"></div>
-      <div id="chatCurrentlyTyping"></div>
-      <form action="" id="chatForm">
-        <input id="chatInput" autocomplete="off" />
-        <button id="chatSendButton" disabled="true">Send</button>
-      </form>
-      <div>
-        All Users:
-        <div id="chat"></div>
-      </div>
-    </div>
-
-    <div>
-      <h1>Exercise: Typing of the Dead</h1>
-      <div>
-        You get a point every time you type the word correctly. If you make a typo you lose all your points!
-      </div>
-      <div id="TotDWord"></div>
-      <input type="text" name="" id="TotDInput" value="" />
-      <div id="TotDScore"></div>
-      <div id="TotDHighscore"></div>
-    </div>
-
   </div>
+
+  <div>
+    <h1>Exercise: Input</h1>
+    <div>
+      Check the input field
+    </div>
+    <div id="helloWorld">
+      <input type="text" id="input1">
+      <button id="stopLogging">Stop logging</button>
+      <br>
+      <input type="text" id="input2" disabled="true"> Reacts to input with more than 2 characters
+      <br>
+      <input type="text" id="input3" disabled="true"> Reacts to input after a short delay
+      <br>
+      <input type="text" id="input4" disabled="true"> Reacts to the first 3 events. Then stops
+    </div>
+  </div>
+
+  <div>
+    <h1>Exercise:Arrays & Objects</h1>
+    <div>
+      Try sort, map, group by and filtering
+    </div>
+    <div id="arraysObjects">
+      <!-- The content for this will be generated dynamicaly -->
+    </div>
+  </div>
+
+
+  <div>
+    <h1>Exercise: Chat</h1>
+      your name :
+      <input type="text" name="" id="chatUsername" value="" />
+      <button id="chatLoginButton">Login</button>
+    <div id="chatMessages" style="height:200px; overflow:auto; border: 1px solid black;"></div>
+    <div id="chatCurrentlyTyping"></div>
+    <form action="" id="chatForm">
+      <input id="chatInput" autocomplete="off" />
+      <button id="chatSendButton" disabled="true">Send</button>
+    </form>
+    <div>
+      All Users:
+      <div id="chatAllUsers"></div>
+    </div>
+  </div>
+
+  <div>
+    <h1>Exercise: Typing of the Dead</h1>
+    <div>
+      You get a point every time you type the word correctly. If you make a typo you lose all your points!
+    </div>
+    <div id="TotDWord"></div>
+    <input type="text" name="" id="TotDInput" value="" /><span>Highscore: </span><span id="TotDHighscore"></span>
+    <div id="TotDScore"></div>
+  </div>
+  
+   <div>
+    <h1>Tweet Service</h1>
+    <div>
+      Get the newest infos straight from twitter!
+    </div>
+    <div id="tweetService">
+      <!-- The content for this will be generated dynamicaly -->
+    </div>
+  </div>
+
+  <div>
+    <h1>Wikipedia Suggestions</h1>
+    <div id="wikipedia">
+      <input type="text" name="" id="wikipediaInput" value="" />
+      <div id="wikipediaOutput"></div>
+    </div>
+  </div>
+
+  <div>
+    <h1>Multiclick</h1>
+    <div id="multiclick">
+      <button id="multiclickButton">Click me fast!</button>
+    </div>
+  </div>
+
 
   <script>
     console.clear();
@@ -110,13 +106,13 @@
 
   <script src="util/renderer.js"></script>
 
-  <script src="references/1_1-basics.js"></script>
   <script src="references/3_1-TweetUI.js"></script>
   <script src="references/3_1-TweetService.js"></script>
   <script src="references/3_1-TweetApp.js"></script>
   <script src="references/3_2-Wikipedia.js"></script>
   <script src="references/3_3-Multiclick.js"></script>
 
+  <script src="exercise/Input.js"></script>
   <script src="exercise/ArraysObjects.js"></script>
   <script src="exercise/ChatClient.js"></script>
   <script src="exercise/TypingOfTheDead.js"></script>

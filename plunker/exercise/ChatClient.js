@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Recommended order:
+ * Send/receive message
+ * Display current users
+ * "Is Typing"
+ * Send/receive PM (private message)
+ ******************************************************************************/ 
+
+
 (() => {
   // ----- UI Elements -----
   const loginButton = $('#chatLoginButton');
@@ -34,7 +43,7 @@
   function connect(username) {
 
     // ----- Connect to the server ----- 
-    var socket = io.connect('http://localhost:3000', {
+    var socket = io.connect('http://141.60.170.61:3000', {
       transports: ['websocket'],
       query: 'name=' + username
     });
@@ -48,7 +57,7 @@
        * TODO: Send Message
        * Look at the ChatServer code to see how socket.io works.
        * You will use socket.emit(...) and socket.on(...) to interact with the server
-       * Check the server API for infos
+       * Check the server API file in this plunker for infos
        */
        
       /**
