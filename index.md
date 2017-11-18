@@ -2,7 +2,7 @@
 
 
 ## Overview
-In this blog we will dive into the world of reactive programming with JavaScript. Basically we devided them into three categories:
+In this blog we will dive into the world of reactive programming with JavaScript. We will go through these topics:
 
 1. JavaScript basics
 
@@ -54,7 +54,7 @@ Moving on to: Arrays and Objects
 We already looked at Variables, now Objects are like Variables since they are containers for data too. Objects can hold many values. Those values don’t have to be of the same type. Arrays are special variables too. They can contain many values as well. 
 How to access those values? With objects you use the names of the values, e.g. myObject.Name returns “Max”. Arrays returns values by numbers, e.g. myElements[1] returns 2. Remember, the first element of an Array is called by 0, the second by 1 and so on. 
 
-Next on the agenda are functions. Functions are blocks of code, defined to fullfil a specific task. They are defined by the keyword **function** and a **name**, following **parentheses**, which can contain paramters. A function is executed when something, e.g. an event or even another function, calls is. 
+Next on the agenda are functions. Functions are blocks of code, defined to fulfil a specific task. They are defined by the keyword **function** and a **name**, following **parentheses**, which can contain parameters. A function is executed when something, e.g. an event or even another function, calls is. 
 
 Here some examples:
 ```javascript
@@ -71,7 +71,7 @@ function myFunction (firstname, surname){
 }
 
 ```
-The first function gets two parameters and returns them as object. As soon as the surronding function or script is executed - the first function can be executed. The second function on the other hand is a functional expression and is ready to be executed as soon as the line, in which it is defined, is reached in the executed script.
+The first function gets two parameters and returns them as object. As soon as the surrounding function or script is executed - the first function can be executed. The second function on the other hand is a functional expression and is ready to be executed as soon as the line, in which it is defined, is reached in the executed script.
 
 There are some **global functions** you can use.
 
@@ -95,11 +95,11 @@ As mentioned earlier JavaScript is the programming language of the web, so what'
 
 This is an easy example. We have a simple HTML which renders a label, an input field, a button and another input field (our output field). As soon as the user clicks on the button, the javascript function *greet()* is called. It simply gets the value of the input field and prepares a greeting for the output field. This is an example for synchronous handling. One line of code is executed after the other and there are no delays in time.
 
-Normally web applications aren't as simple as that. The data that is displayed is not stored inside the HTML or the Javascript and user inputs are not completely handeled inside the application. Usually a server provides the necessary data for the application.
+Normally web applications aren't as simple as that. The data that is displayed is not stored inside the HTML or the Javascript and user inputs are not completely handled inside the application. Usually a server provides the necessary data for the application.
 
 ![browserServer](/browserServer.png)
 
-The above images shows a typical flow of a request. The user submits a form or clicks on a button in order to some information or data. An event occours and a request is created and send with JavaScript. The server recieves the request, processes it and creates and send a response. The browser recieves the response and processes the data. It will take some time to deliever the request, for the server to prepare the response and to deliever the response. How long it's going to be, is not clear by the time the browser sends the request. With synchronous handling as our fist example, the browser will stop until the request is back and the user is unable to do something else. Since no one would like to use an application like that, we work with asynchronous handling. By the time the request is send, the browser continues with the execution of script and handls other events, but once the response arrives it will continue to process the returned data.
+The above images shows a typical flow of a request. The user submits a form or clicks on a button in order to some information or data. An event occurs and a request is created and send with JavaScript. The server receives the request, processes it and creates and send a response. The browser receives the response and processes the data. It will take some time to deliver the request, for the server to prepare the response and to deliver the response. How long it's going to be, is not clear by the time the browser sends the request. With synchronous handling as our fist example, the browser will stop until the request is back and the user is unable to do something else. Since no one would like to use an application like that, we work with asynchronous handling. By the time the request is send, the browser continues with the execution of script and handles other events, but once the response arrives it will continue to process the returned data.
 
 **Callbacks**
 
@@ -141,7 +141,7 @@ Callbacks are quite handy but can be confusing when the application has a lot of
 
 **Promises**
 
-Alternatively you can use [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises). A promise represents a value which is not present by the time the promise is created. A request is handeld asynchronous but returns a value like a synchronous function. Let's take a look at the syntax:
+Alternatively you can use [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises). A promise represents a value which is not present by the time the promise is created. A request is handled asynchronous but returns a value like a synchronous function. Let's take a look at the syntax:
 
 ```javascript
 var myPromise = new Promise(function(resolve, reject) {
@@ -181,7 +181,7 @@ function createPromise(){
 }
 
 ```
-By the time the request is finsihed and valid, then the response will be rendered. The methods *then* and *catch* return a promise thereselfs, so they can be chained:
+By the time the request is finished and valid, then the response will be rendered. The methods *then* and *catch* return a promise as well, so they can be chained:
 
 ![promises](https://cdn.rawgit.com/Vectaio/a76330b025baf9bcdf07cb46e5a9ef9e/raw/26c4213a93dee1c39611dcd0ec12625811b20a26/js-promise.svg) Graphic [from](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
@@ -195,7 +195,7 @@ Let's leave the world of web programming and look into another topic:
 
 What is functional programming? In short, functional programming is programming without mutable variables and assignments as well as imperative control flows. That means variables are constant, once a value is assigned to them, it won't change.
 
-For example, we want to programm a light switcher. We have a light which is on or off. First approach could be something like that:
+For example, we want to program a light switcher. We have a light which is on or off. First approach could be something like that:
 
 ```javascript
 var light = {
@@ -249,7 +249,7 @@ var filtered = values.filter(value => value % 2 === 0);
 ```
 ## 2. What is Reactive Programming
 
-Reactive Programming is a programming paradigm for asynchronous propagation of change. Many considere it event driven. Instead of "execute function B after function A" or "execute function A after 5 seconds" you declare "execute function A whenever event X happens". This is already common practice in almost every UI framework where you write event handler. You attach a function to a "button clicked" event for example. But reactive programming takes it even further by making streams of not only events but any data. And with a much more advanced API to manipulate and combine these streams.
+Reactive Programming is a programming paradigm for asynchronous propagation of change - it's often described as "event driven programming". Instead of "execute function B after function A" or "execute function A after 5 seconds" you declare "execute function A whenever event X happens". This is already common practice in almost every UI framework where you write event handler. You attach a function to a "button clicked" event for example. But reactive programming takes it even further by making streams of not only events but any data. And with a much more advanced API to manipulate and combine these streams.
 
 A great embodiment of reactive programming is ReactiveX - a language agnostic specification for reactive programming libraries. We will focus mainly on ReactiveX and RxJS (the JavaScript implementation of ReactiveX) but will also show you a bit of Socket.io.
 
@@ -260,7 +260,7 @@ What does that mean? Instead of working directly with your data T you access the
 **Observables fill the gap by being the ideal way to access asynchronous sequences of multiple items** [ReactiveX](http://reactivex.io/intro.html)
 
 
-| type of execution   |  single items | mulitple items
+| type of execution   |  single items | multiple items
 |------ |  --------  |  ----------
 | synchronous | T getData() | Iterable<T> getData()
 | asynchronous | Future<T> getData() | Observable<T> getData()
@@ -291,15 +291,15 @@ The following image by [ReactiveX](http://reactivex.io) shows the flow of items 
 
 In short: an observable is a source of items which can be subscribed to. There are 3 types of output: 
 - onNext -> a next item
-- onError -> an error occoured the stream ends 
+- onError -> an error occurred the stream ends 
 - onCompleted -> the stream ended
 
 **Operators**
 
-Operators work on an observable, they operate with the items and most of them return an observable themself. Be aware - we do functional programming so the original values won't change and new ones are created during the operation. Since operator can return observables it's possible to chain multiple operators.
+Operators are functions that can be called on an observable. They transform, combine or otherwise operate with the items and usually return a new observable. Be aware - like in functional programming the original values or streams won't change and new ones are created during the operation. Since operator can return observables it's possible to chain multiple operators.
 There are different types of operators:
 
-- creating observables - operators orginate new observables
+- creating observables - operators originate new observables
 - transforming observables - operators that transform items
 - filtering observables - operators that only emits items matching a criteria
 - combining observables - operators which combine different observables into a single one
@@ -317,7 +317,7 @@ A subject is both observer and observable. It can subscribe to an observable and
 
 With schedulers you can introduce multithreading into your observable operators, you can do so by telling those operators to use a particular scheduler.
 
-Bevore we dive into the world of programming with RxJS, let's take a look at the bigger picture. 
+Before we dive into the world of programming with RxJS, let's take a look at the bigger picture. 
 Reactive is not just a programming paradigm but also an approach to describe modern system architectures. 
 
 **The reactive manifesto**
@@ -336,13 +336,13 @@ Now let's take a closer look into those characteristics.
 - Elastic - the workload may vary, still the system is responsive. The system increase or decreases the resources assigned to handle the streams as reaction to changes.
 - Message Driven - asynchronous messages are passed through the system. This forms boundaries between components, that provides isolation, loose coupling and location transparency.      
 
-This architecure is already very common in large system. Being aware of these principles you can apply them when designing new systems, right from the start, rather then to rediscover them during implementation.  
+This architecture is already very common in large system. Being aware of these principles you can apply them when designing new systems, right from the start, rather then to rediscover them during implementation.  
 
 ## Reactive Programming in JavaScript
 
 So what does reactive Programming look like in JavaScript? Let's start with something common: double clicks. Lot's of applications use them. How would you do it with traditional programming? Saving the time of every click and when another click occurs compare the current time to the previous time? But what if you want to react to single clicks and double clicks. After every single click you would need to wait a few milliseconds to see if another click has occurred. It's obviously possible but it's going to be some ugly code. With streams this can be done with a few simple and easy to read operations.
 
- Every browser offers event handlers for button clicks. With 1 line of code RxJS creates a stream of click events from that button. At first we would group clicks by proximity in time. We want to group all clicks that are withing 250ms of each other to a list of clicks. Then map this list to the number of clicks in the list. So a single click within our specified 250ms will becomes a 1, double clicks a 2, tripple click a 3 and so on. Then simply filter the stream to only return values equal to or greater than 2 and you have a stream that only contains events where the user clicks more than once in quick succession. This is what the streams for our double click detection would look like:
+ Every browser offers event handlers for button clicks. With 1 line of code RxJS creates a stream of click events from that button. At first we would group clicks by proximity in time. We want to group all clicks that are withing 250ms of each other to a list of clicks. Then map this list to the number of clicks in the list. So a single click within our specified 250ms will becomes a 1, double clicks a 2, triple click a 3 and so on. Then simply filter the stream to only return values equal to or greater than 2 and you have a stream that only contains events where the user clicks more than once in quick succession. This is what the streams for our double click detection would look like:
 ![DoubleClickStream](/double_click_stream.png)
 [Image Source](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
 
