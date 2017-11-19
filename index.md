@@ -536,4 +536,4 @@ We connect to the localhost on port 3000 (as we defined in our server code) and 
 Then we can just like on the server side react to events with ``.on`` and emit events with ``.emit``
 
 Go check out the plunker to use as a chat client (and our server code). There's also code examples of what we talked about here, some basic exercises and one advanced exercise (Typing of the Dead):  
-http://embed.plnkr.co/4GeB5mRIIskWgqj75QPq/
+[http://embed.plnkr.co/4GeB5mRIIskWgqj75QPq/](http://embed.plnkr.co/4GeB5mRIIskWgqj75QPq/)
