@@ -449,20 +449,20 @@ In case you're not familiar with UI development, let me tell you something: Keep
 Let's say you have a ``TweetDisplayer`` component. It gets a reference to the ``TweetService`` via your dependency injection and then calls the ``getNewTweets`` function of the service to fetch the newest tweets. If you press the "update" button in the ``TweetDisplayer`` it will call ``getNewTweets`` again and receive a promise. When the promise is fulfilled it will display the new tweets.  
 What if there is another component now: The ``CategoryPicker``. A UI component that let's you decided you only want to see tweets about "JavaScript", "Cats" or some other topic. The ``TweetDisplayer`` and the ``CategoryPicker`` don't know each other - and they shouldn't. One should work without the other. So what happens when the ``CategoryPicker`` tells the ``TweetService`` to ``getNewTweets``? It will receive a promise and once that promise is fulfilled the tweets are here. Here in the ``CategoryPicker``. The ``TweetDisplayer`` was never involved and has no idea that th ``CategoryPicker`` chose a category or that the ``TweetService`` fetched new tweets! So what do you do?  
  **Use observables!**  
- Instead of returning one promise to the one component that called for a tweet update your ``TweetService`` will now offer a ``getTweetObservable`` function. This will return the observable that will deliver our tweets to the UI components. And unlike previously every UI component will receive the same observable! What happens when you want the service to get new tweets? First of all, the ``getNewTweets`` function will no longer return a promise. In fact it doesn't need to do anything! Why? Because everybody that want's the newest tweets is already subscribed to the tweet observable. When the service receives fetches new tweets it will simply push them in the observable and everybody who subscribed will be updated. It doesn't matter who, when or why called for new tweets, the observable delivers the newest, freshest and hottest tweets to every componen in your application!
+ Instead of returning one promise to the one component that called for a tweet update your ``TweetService`` will now offer a ``getTweetObservable`` function. This will return the observable that will deliver our tweets to the UI components. And unlike previously every UI component will receive the same observable! What happens when you want the service to get new tweets? First of all, the ``getNewTweets`` function will no longer return a promise. In fact it doesn't need to do anything! Why? Because everybody that wants the newest tweets is already subscribed to the tweet observable. When the service receives new tweets it will simply publish them via the observable and everybody who subscribed will be updated. It doesn't matter who, when or why called for new tweets, the observable delivers the newest, freshest and hottest tweets to every component in your application!
  
  This is especially useful if you need to display the same data in multiple locations. As long as every component is subscribed to the same observable they will always have the same data!
 
 ### Socket.io
 Lastly I want to show you something other than RxJS because while it is a great library it's not the only way to program reactively.  
 So far all of our reactions and events where user based. Button clicks, text input and so on. But what about the other side - the server.  
-There many use cases where a client would want to react to events from a server. The first thing that springs to my mind is a chatroom.  
+There many use cases where a client would want to react to events from a server. The first thing that springs to my mind is a chat room.  
 While REST interfaces are really good for a lot of applications it's not useful for a real time chat. You don't want to ``GET /chatroom/messages`` every seconds and see if there are new messages. Wouldn't it be nice if the server could just tell us when there are new messages?  
 Well guess what - the server CAN do that!
 It's called websockets and I'm not going into the technical details. Let's just say it's like an open channel between two applications where both can send messages through the channel. The perfect setup for reactive programming!  
 We can easily use this technology with the [Socket.io](https://socket.io/) library.  
-Warning: Basic understanding of Node.js and NPM are required!  
-We need some libraries (``npm i --save express socket.io``) to set up a working web server (that's what the first three and very last line do) and then we're ready to programm reactively. 
+Note: To run this example at home you need Node.js and NPM but you can understand the code without it.  
+We need some libraries to set up a working web server (that's what the first three and very last line do) and then we're ready to programm reactively. 
  
  ````javascript
  const app = require('express')();
@@ -498,7 +498,7 @@ myConnection.emit(
 ````
  
  
- Let's make a chat server! (I assume you're familiar with NPM & Node). Start by installing the dependencies: First we implement the predefined "connection" event that will pass a socket into our fuction. In there we can declare all kinds of reactions to events. Like the 'chat message' event. When the socket sends us a "chat message" event, we simply emit it to every current socket (because we used ``io.emit`` - had we wrote ``socket.emit`` we would send the message only back to the sender. Remember: The socket is a single connection to a single other application).
+ Let's make a chat server! Start by installing the dependencies  (``npm i --save express socket.io``) and setup ``yourFile.js`` with the stub from above. Then we implement the predefined "connection" event that will pass a socket into our fuction. In there we can declare all kinds of reactions to events. Like the 'chat message' event. When the socket sends us a "chat message" event, we simply emit it to every current socket (because we used ``io.emit`` - had we wrote ``socket.emit`` we would send the message only back to the sender. Remember: The socket is a single connection to a single other application).
 
 ````javascript
 const app = require('express')();
@@ -516,7 +516,7 @@ io.on('connection', function (socket) {
 http.listen(3000);
 ````
 
-Now start the file with node (``node myFile.js`` in your console of choice) and the server is up and running!
+Now start the file with node (``node yourFile.js`` in your console of choice) and the server is up and running!
 
 And our client could look something like this:
 
@@ -535,5 +535,5 @@ We connect to the localhost on port 3000 (as we defined in our server code) and 
 
 Then we can just like on the server side react to events with ``.on`` and emit events with ``.emit``
 
-Go check out the plunker where you can see a chat server & client that support chatting, private messaging and a bit more:  
+Go check out the plunker to use as a chat client (and our server code). There's also code examples of what we talked about here, some basic exercises and one advanced exercise (Typing of the Dead):  
 http://embed.plnkr.co/4GeB5mRIIskWgqj75QPq/
